@@ -1,0 +1,17 @@
+{
+  "type": "non_magnet",
+  "name": "Synthetic Legacy Steel",
+  "_conductivity_expression": "0.0",
+  "_conductivity_unit": "S/m",
+  "permeability_type": "nonlinear",
+  "permeability": {
+    "b_unit": "T",
+    "h_unit": "A/m",
+    "data": [
+      [0.0, 0.0],
+      [100.0, 0.4],
+      [400.0, 1.1],
+      [1000.0, 1.5]
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+# Python build and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Local IDE and environment settings
+.vscode/*.local.json
+.env
+.venv/
+
+# Local or third-party material data: not part of the public source release
+materials/User/*.material.json
+materials/IEEJ/
+open_material_import/datasets/**/raw/
+
+# Generated files
+generated/
+*.ems-material-links.json

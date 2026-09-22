@@ -1,0 +1,15 @@
+EMS Material Manager NOTICE
+===========================
+
+Copyright (c) 2026 Software Cradle Co., Ltd. / EMSolution-SSIL contributors.
+
+The source code in this repository is licensed under the PolyForm Perimeter License 1.0.1; see LICENSE.
+
+Material data is not covered by the source-code license. The initial public release includes only the synthetic Examples dataset. Third-party data, including IEEJ data, is not included in this release.
+
+For any future IEEJ dataset distribution, retain the provider attribution and state the source URL:
+http://www2.iee.or.jp/~drm/PublicUseMotors/
+
+IEEJ's Terms of Service permit use and redistribution/secondary distribution of its digital data subject to explicit source attribution. Each dataset must additionally contain its own provenance and licensing record.
+
+Customer, contract, and encrypted datasets are not distributed in this repository.

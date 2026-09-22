@@ -1,0 +1,146 @@
+diff --git a/eMotorSolution/Tools/Material.py b/eMotorSolution/Tools/Material.py
+--- a/eMotorSolution/Tools/Material.py
++++ b/eMotorSolution/Tools/Material.py
+@@ -904,6 +904,7 @@ class Non_Magnet_Material(MS_Data):
+         material.project_data = project_data
+         material.permeability.project_data = project_data
+         material.manufacturing = MaterialManufacturingData.from_dict(data.get("manufacturing"), project_data)
++        material._ems_material_origin = dict(data.get("_ems_material_origin", {}))
+
+         # Handle iron loss if present
+         if "iron_loss" in data and data["iron_loss"] is not None:
+@@ -993,6 +994,9 @@ class Non_Magnet_Material(MS_Data):
+             result["iron_loss"] = self.iron_loss.to_dict()
+         else:
+             result["iron_loss"] = None
++        origin = getattr(self, "_ems_material_origin", None)
++        if origin:
++            result["_ems_material_origin"] = dict(origin)
+         return result
+
+     def update_input_control(self, mat_id: int, mat_name: str, input_control: dict, packing_factor: float = 1) -> dict:
+@@ -1405,6 +1409,7 @@ class Magnet_Material(MS_Data):
+         )
+         material.project_data = project_data
+         material.manufacturing = MaterialManufacturingData.from_dict(data.get("manufacturing"), project_data)
++        material._ems_material_origin = dict(data.get("_ems_material_origin", {}))
+         return material
+
+     @staticmethod
+@@ -1424,7 +1429,7 @@ class Magnet_Material(MS_Data):
+         )
+
+     def to_dict(self) -> dict:
+-        return dict(
++        result = dict(
+             type="magnet",
+             name=self.name,
+             _radial_expression=self._radial_expression,
+@@ -1436,6 +1441,10 @@ class Magnet_Material(MS_Data):
+             _relative_permeability_expression=self._relative_permeability_expression,
+             manufacturing=self.manufacturing.to_dict(),
+         )
++        origin = getattr(self, "_ems_material_origin", None)
++        if origin:
++            result["_ems_material_origin"] = dict(origin)
++        return result
+
+     def update_input_control(self, mat_id: int, mat_name: str, input_control: dict) -> dict:
+         input_control["16_Material_Properties"]["16_1_3D_Element_Properties"].append(
+diff --git a/GUI/MS_CheckPoints/Materials/Materials.py b/GUI/MS_CheckPoints/Materials/Materials.py
+--- a/GUI/MS_CheckPoints/Materials/Materials.py
++++ b/GUI/MS_CheckPoints/Materials/Materials.py
+@@ -349,6 +349,17 @@ class NonMagnetMaterialCheckPoint(MS_Checkpoint):
+             with open(file_name, "w") as f:
+                 json.dump(self.props.to_dict(), f, indent=4)
+
++    def export_to_material_manager(self):
++        try:
++            from ems_material.gui.product_exchange import register_emotorsolution_material
++
++            register_emotorsolution_material(
++                self.project.main_window,
++                self.props.to_dict(),
++            )
++        except Exception as error:
++            print_log(f"Material Manager export failed: {error}", MessageType.ERROR)
++
+     def get_menu_actions(self):
+         actions = super().get_menu_actions()
+         # Add rename action
+@@ -362,6 +373,10 @@ class NonMagnetMaterialCheckPoint(MS_Checkpoint):
+         export_action.setIcon(QIcon(":/icons/arrow_export_up.svg"))
+         export_action.triggered.connect(self.export)
+         actions.append(export_action)
++        library_export_action = QAction("Export to material manager", self.project.main_window)
++        library_export_action.setIcon(QIcon(":/icons/arrow_export_up.svg"))
++        library_export_action.triggered.connect(self.export_to_material_manager)
++        actions.append(library_export_action)
+         # Add remove action
+         remove_action = QAction("Remove", self.project.main_window)
+         remove_action.setIcon(QIcon(":/icons/delete.svg"))
+@@ -504,6 +519,17 @@ class MagnetMaterialCheckPoint(MS_Checkpoint):
+             with open(file_name, "w") as f:
+                 json.dump(self.props.to_dict(), f, indent=4)
+
++    def export_to_material_manager(self):
++        try:
++            from ems_material.gui.product_exchange import register_emotorsolution_material
++
++            register_emotorsolution_material(
++                self.project.main_window,
++                self.props.to_dict(),
++            )
++        except Exception as error:
++            print_log(f"Material Manager export failed: {error}", MessageType.ERROR)
++
+     def get_menu_actions(self):
+         actions = super().get_menu_actions()
+         # Add rename action
+@@ -517,6 +543,10 @@ class MagnetMaterialCheckPoint(MS_Checkpoint):
+         export_action.setIcon(QIcon(":/icons/arrow_export_up.svg"))
+         export_action.triggered.connect(self.export)
+         actions.append(export_action)
++        library_export_action = QAction("Export to material manager", self.project.main_window)
++        library_export_action.setIcon(QIcon(":/icons/arrow_export_up.svg"))
++        library_export_action.triggered.connect(self.export_to_material_manager)
++        actions.append(library_export_action)
+         # Add remove action
+         remove_action = QAction("Remove", self.project.main_window)
+         remove_action.setIcon(QIcon(":/icons/dismiss_square.svg"))
+@@ -696,6 +726,24 @@ class MaterialsMileStone(MS_MileStone):
+                 else:
+                     print_log(f"Error loading material: {file_path}", MessageType.ERROR)
+
++    def import_from_material_manager(self):
++        try:
++            from ems_material.gui.product_exchange import select_emotorsolution_material
++
++            data = select_emotorsolution_material(self.project.main_window)
++            if data is None:
++                return
++            if data.get("type") == "magnet":
++                material = Magnet_Material.from_dict(data, self.project.props)
++                self.add_magnet_material_props(material)
++            elif data.get("type") == "non_magnet":
++                material = Non_Magnet_Material.from_dict(data, self.project.props)
++                self.add_non_magnet_material_props(material)
++            else:
++                raise ValueError(f"Unsupported material type: {data.get('type')!r}")
++        except Exception as error:
++            print_log(f"Material Manager import failed: {error}", MessageType.ERROR)
++
+     def update_status(self):
+         status = MS_CheckpointStatus.PASSED
+         for checkpoint in self.material_checkpoints.values():
+@@ -735,6 +783,10 @@ class MaterialsMileStone(MS_MileStone):
+         load_action.setIcon(QIcon(":/icons/arrow_import.svg"))
+         load_action.triggered.connect(self.load)
+         actions.append(load_action)
++        library_import_action = QAction("Import from material manager", self.project.main_window)
++        library_import_action.setIcon(QIcon(":/icons/arrow_import.svg"))
++        library_import_action.triggered.connect(self.import_from_material_manager)
++        actions.append(library_import_action)
+         return actions
+
+     def rename(self, old_name: str, new_name: str) -> bool:

@@ -1,0 +1,14 @@
+{
+  "schema": "ems_material_manager_config",
+  "schema_version": "1.0",
+  "default_write_source": "User",
+  "catalog": {
+    "properties": "_catalog/property_definitions.v1.json",
+    "material_types": "_catalog/material_types.v1.json",
+    "templates": "_catalog/templates"
+  },
+  "sources": [
+    {"path": "User", "enabled": true, "writable": true},
+    {"path": "Examples", "enabled": true, "writable": false}
+  ]
+}

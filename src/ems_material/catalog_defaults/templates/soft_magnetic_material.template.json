@@ -1,0 +1,52 @@
+{
+  "schema": "ems_material_template",
+  "schema_version": "1.0",
+  "family": "soft_magnetic_material",
+  "description": "Soft-magnetic material template. A B-H curve takes precedence; relative permeability is the linear fallback.",
+  "properties": [
+    {"path": "general.density", "requirement": "required", "profiles": ["manufacturing_bom"]},
+    {"path": "electromagnetic.electrical_conductivity", "requirement": "recommended"},
+    {"path": "electrical.relative_permittivity", "requirement": "optional", "profiles": ["electric_field_analysis"]},
+    {"path": "electrical.complex_relative_permittivity_real", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_z", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_z", "requirement": "optional"},
+    {"path": "electromagnetic.BH_curve", "requirement": "optional", "profiles": ["magnetic_analysis"]},
+    {
+      "path": "electromagnetic.relative_permeability",
+      "requirement": "recommended",
+      "profiles": ["magnetic_analysis"],
+      "default": {
+        "type": "scalar",
+        "value": 1.0,
+        "unit": "1",
+        "note": "Linear fallback used only when no B-H curve is registered. Replace with measured or reference data when available."
+      }
+    },
+    {"path": "electromagnetic.BH_curve_x", "requirement": "optional"},
+    {"path": "electromagnetic.BH_curve_y", "requirement": "optional"},
+    {"path": "electromagnetic.BH_curve_z", "requirement": "optional"},
+    {"path": "electromagnetic.relative_permeability_x", "requirement": "optional"},
+    {"path": "electromagnetic.relative_permeability_y", "requirement": "optional"},
+    {"path": "electromagnetic.relative_permeability_z", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_real", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_imaginary", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_real_x", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_real_y", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_real_z", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_imaginary_x", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_imaginary_y", "requirement": "optional"},
+    {"path": "electromagnetic.complex_relative_permeability_imaginary_z", "requirement": "optional"},
+    {"path": "electromagnetic.iron_loss_ke", "requirement": "optional"},
+    {"path": "electromagnetic.iron_loss_kh", "requirement": "optional"},
+    {"path": "thermal.thermal_conductivity", "requirement": "optional"},
+    {"path": "thermal.specific_heat", "requirement": "optional"},
+    {"path": "mechanical.youngs_modulus", "requirement": "optional"},
+    {"path": "mechanical.poissons_ratio", "requirement": "optional"},
+    {"path": "mechanical.yield_strength", "requirement": "optional"}
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "ems_material_type_catalog",
+  "schema_version": "1.0",
+  "allow_custom_family": true,
+  "types": [
+    {
+      "id": "electrical_steel",
+      "label": "Electrical Steel Sheet",
+      "description": "Laminated electrical steel used by magnetic analysis and Manufacturing BOM.",
+      "aliases": ["electrical_steel_sheet"],
+      "template": "electrical_steel.template.json"
+    },
+    {
+      "id": "permanent_magnet",
+      "label": "Permanent Magnet",
+      "description": "Permanent-magnet intrinsic properties; orientation remains a component setting.",
+      "aliases": ["magnet"],
+      "template": "permanent_magnet.template.json"
+    },
+    {
+      "id": "conductor",
+      "label": "Conductor",
+      "description": "Electrical and thermal properties of coils, busbars, and conductive shields.",
+      "aliases": ["electrical_conductor", "coil_conductor"],
+      "template": "conductor.template.json"
+    },
+    {
+      "id": "electrical_insulator",
+      "label": "Electrical Insulation",
+      "description": "Electrical, thermal, and BOM properties of insulation material.",
+      "aliases": ["insulation", "insulator"],
+      "template": "electrical_insulator.template.json"
+    },
+    {
+      "id": "soft_magnetic_material",
+      "label": "Soft Magnetic Material",
+      "description": "Soft-magnetic materials other than laminated electrical-steel sheets; supports either a B-H curve or linear relative permeability.",
+      "aliases": ["soft_magnetic_bulk"],
+      "template": "soft_magnetic_material.template.json"
+    },
+    {
+      "id": "carbon_steel",
+      "label": "Carbon Steel",
+      "description": "Carbon steels such as S45C, with optional nonlinear magnetic data and mechanical properties.",
+      "aliases": [],
+      "template": "carbon_steel.template.json"
+    },
+    {
+      "id": "structural_material",
+      "label": "Structural Material",
+      "description": "Structural metals and non-magnetic mechanical materials.",
+      "aliases": ["structural_metal", "structural_steel"],
+      "template": "structural_material.template.json"
+    },
+    {
+      "id": "fluid_or_gas",
+      "label": "Fluid / Gas",
+      "description": "Cooling fluids, air, and other gases.",
+      "aliases": ["fluid", "gas", "air"],
+      "template": "fluid_or_gas.template.json"
+    },
+    {
+      "id": "generic",
+      "label": "Generic Material",
+      "description": "Minimal extensible material template.",
+      "aliases": ["custom", "other"],
+      "template": "generic.template.json"
+    }
+  ]
+}

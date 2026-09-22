@@ -1,0 +1,21 @@
+{
+  "schema": "ems_material_template",
+  "schema_version": "1.0",
+  "family": "fluid_or_gas",
+  "description": "Fluid or gas template for BOM and thermal calculations.",
+  "properties": [
+    {"path": "general.density", "requirement": "required", "profiles": ["manufacturing_bom"]},
+    {"path": "thermal.thermal_conductivity", "requirement": "recommended"},
+    {"path": "thermal.specific_heat", "requirement": "recommended"},
+    {"path": "electrical.relative_permittivity", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_z", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_z", "requirement": "optional"},
+    {"path": "electrical.dielectric_strength", "requirement": "optional"}
+  ]
+}

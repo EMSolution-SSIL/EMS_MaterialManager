@@ -1,0 +1,7 @@
+{
+  "schema": "ems_material_source_config",
+  "schema_version": "1.0",
+  "name": "User",
+  "description": "User-created and imported materials; maintained by the GUI",
+  "files": []
+}

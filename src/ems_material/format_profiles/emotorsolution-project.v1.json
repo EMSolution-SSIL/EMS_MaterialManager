@@ -1,0 +1,17 @@
+{
+  "format_id": "emotorsolution-project-material/1",
+  "format_version": "1.0",
+  "origin_key": "_ems_material_origin",
+  "material": {
+    "type": "type",
+    "name": "name",
+    "conductivity_expression": "_conductivity_expression",
+    "conductivity_unit": "_conductivity_unit",
+    "permeability_type": "permeability_type",
+    "permeability": "permeability",
+    "iron_loss": "iron_loss",
+    "manufacturing": "manufacturing"
+  },
+  "supported_permeability_modes": ["linear", "bh_isotropy", "bh_anisotropy"],
+  "supported_iron_loss_modes": ["none", "isotropy", "anisotropy"]
+}

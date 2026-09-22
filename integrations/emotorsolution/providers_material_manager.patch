@@ -1,0 +1,17 @@
+--- a/eMotorSolution/CheckPoints/ManufacturingBOM/providers.py
++++ b/eMotorSolution/CheckPoints/ManufacturingBOM/providers.py
+@@ -33,6 +33,14 @@ def _material(project: Any, name: str | None):
+     return getattr(materials, "collection", {}).get(name)
+
+
+ def density_and_diagnostics(project: Any, name: str | None, source_path: str):
++    root = project_root(project)
++    adapter = getattr(root, "material_manager_adapter", None)
++    if adapter is not None:
++        return adapter.density_and_diagnostics(
++            name,
++            source_path,
++            diagnostic_factory=BOMDiagnostic,
++        )
+     material = _material(project, name)
+     diagnostics: list[BOMDiagnostic] = []

@@ -1,0 +1,25 @@
+{
+  "schema": "ems_material_template",
+  "schema_version": "1.0",
+  "family": "electrical_insulator",
+  "description": "Electrical insulation material; insulation thickness remains a component setting.",
+  "properties": [
+    {"path": "general.density", "requirement": "required", "profiles": ["manufacturing_bom"]},
+    {"path": "electromagnetic.electrical_resistivity", "requirement": "recommended"},
+    {"path": "electromagnetic.electrical_conductivity", "requirement": "optional"},
+    {"path": "electrical.relative_permittivity", "requirement": "recommended"},
+    {"path": "electrical.complex_relative_permittivity_real", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_real_z", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_x", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_y", "requirement": "optional"},
+    {"path": "electrical.complex_relative_permittivity_imaginary_z", "requirement": "optional"},
+    {"path": "electrical.dielectric_strength", "requirement": "recommended"},
+    {"path": "electrical.reference_temperature", "requirement": "optional"},
+    {"path": "thermal.thermal_conductivity", "requirement": "recommended"},
+    {"path": "thermal.specific_heat", "requirement": "recommended"},
+    {"path": "thermal.maximum_operating_temperature", "requirement": "recommended"}
+  ]
+}

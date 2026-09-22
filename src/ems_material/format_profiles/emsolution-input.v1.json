@@ -1,0 +1,38 @@
+{
+  "format_id": "emsolution-input-material/1",
+  "format_version": "1.0",
+  "sections": {
+    "materials": ["16_Material_Properties", "16_1_3D_Element_Properties"],
+    "bh_curves": ["20_BH_Curve"]
+  },
+  "keys": {
+    "material_id": "MAT_ID",
+    "material_name": "MAT_NAME",
+    "electric": "ElectricProperty",
+    "magnetic": "MagneticProperty",
+    "conductivity": "conductivity",
+    "permittivity": "permittivity",
+    "sigma": "SIGMA",
+    "relative_permittivity": "EPS",
+    "eps_complex": "EPS_COMPLEX",
+    "eps_complex_real": "EPS_Re",
+    "eps_complex_imaginary": "EPS_Im",
+    "eps_complex_real_xyz": "EPS_Re_XYZ",
+    "eps_complex_imaginary_xyz": "EPS_Im_XYZ",
+    "relative_permeability": "MU",
+    "bh_curve_id": "BH_CURVE_ID",
+    "bh_curve_id_import_aliases": ["BH_CURVE_ID", "B_H_CURVE_ID"],
+    "bh_curve_xyz": "BH_CURVE_XYZ",
+    "bh_xyz_id": "BH_XYZ_ID",
+    "mu_xyz": "MU_XYZ",
+    "mu_complex": "MU_COMPLEX",
+    "mu_complex_real": "MU_Re",
+    "mu_complex_imaginary": "MU_Im",
+    "mu_complex_real_xyz": "MU_Re_XYZ",
+    "mu_complex_imaginary_xyz": "MU_Im_XYZ",
+    "iron_loss": "IRON_LOSS"
+  },
+  "supported_permeability_modes": ["linear", "bh_isotropy", "bh_anisotropy"],
+  "supported_iron_loss_modes": ["none", "isotropy", "anisotropy"],
+  "pending_unverified_keys": []
+}

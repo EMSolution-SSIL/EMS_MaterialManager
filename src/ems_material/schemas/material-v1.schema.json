@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ems.co.jp/schemas/material-v1.schema.json",
+  "title": "EMS Canonical Material v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "material_id",
+    "material_version",
+    "identity",
+    "properties",
+    "provenance",
+    "version_metadata"
+  ],
+  "properties": {
+    "schema": {"const": "ems_material"},
+    "schema_version": {"const": "1.0"},
+    "material_id": {
+      "type": "string",
+      "minLength": 3,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*(?::[A-Za-z0-9][A-Za-z0-9._-]*)+$"
+    },
+    "material_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "variant_id": {"type": ["string", "null"], "minLength": 1},
+    "parent_ref": {"type": ["string", "null"], "minLength": 1},
+    "identity": {"$ref": "#/$defs/identity"},
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {"$ref": "#/$defs/materialProperty"}
+      }
+    },
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "version_metadata": {"$ref": "#/$defs/versionMetadata"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": ["name", "family"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "family": {"type": "string", "minLength": 1},
+        "manufacturer": {"type": ["string", "null"]},
+        "grade": {"type": ["string", "null"]},
+        "description": {"type": ["string", "null"]},
+        "aliases": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "USER_INPUT",
+            "EMS",
+            "MANUFACTURER",
+            "MEASURED",
+            "REFERENCE",
+            "ESTIMATED",
+            "UNKNOWN"
+          ]
+        },
+        "reference": {"type": ["string", "null"]},
+        "date": {"type": ["string", "null"], "format": "date"},
+        "notes": {"type": ["string", "null"]},
+        "license": {"type": ["string", "null"]},
+        "license_url": {"type": ["string", "null"]},
+        "attribution": {"type": ["string", "null"]},
+        "source_manifest": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "versionMetadata": {
+      "type": "object",
+      "required": ["author", "updated_at", "change_note"],
+      "properties": {
+        "author": {"type": "string", "minLength": 1},
+        "updated_at": {"type": "string", "format": "date-time"},
+        "change_note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "conditionValue": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": {"type": ["number", "string"]},
+        "unit": {"type": ["string", "null"], "minLength": 1}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"value": {"type": "number"}}},
+          "then": {"required": ["unit"], "properties": {"unit": {"type": "string", "minLength": 1}}}
+        },
+        {
+          "if": {"properties": {"value": {"type": "string"}}},
+          "then": {"properties": {"unit": {"type": "null"}}}
+        }
+      ]
+    },
+    "validityRange": {
+      "type": "object",
+      "required": ["minimum", "maximum", "unit"],
+      "properties": {
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "propertySource": {
+      "type": "object",
+      "properties": {
+        "dataset_id": {"type": "string", "minLength": 1},
+        "manifest_ref": {"type": "string", "minLength": 1},
+        "raw_path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9A-Fa-f]{64}$"},
+        "locator": {"type": "string", "minLength": 1},
+        "doi": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "license_url": {"type": "string", "minLength": 1},
+        "attribution": {"type": "string", "minLength": 1},
+        "original_unit": {"type": "string", "minLength": 1},
+        "conversion_note": {"type": "string", "minLength": 1},
+        "derivation_note": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "scalarProperty": {
+      "type": "object",
+      "required": ["type", "value", "unit"],
+      "properties": {
+        "type": {"const": "scalar"},
+        "value": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1},
+        "note": {"type": ["string", "null"]},
+        "conditions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/conditionValue"}
+        },
+        "source": {"$ref": "#/$defs/propertySource"},
+        "valid_ranges": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/validityRange"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "axis": {
+      "type": "object",
+      "required": ["name", "unit", "values"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "values": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"type": "number"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "curveDisplay": {
+      "type": "object",
+      "properties": {
+        "x_scale": {"enum": ["linear", "log"]},
+        "y_scale": {"enum": ["linear", "log"]}
+      },
+      "additionalProperties": false
+    },
+    "curveProperty": {
+      "type": "object",
+      "required": ["type", "x", "y"],
+      "properties": {
+        "type": {"const": "curve"},
+        "x": {"$ref": "#/$defs/axis"},
+        "y": {"$ref": "#/$defs/axis"},
+        "note": {"type": ["string", "null"]},
+        "display": {"$ref": "#/$defs/curveDisplay"},
+        "conditions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/conditionValue"}
+        },
+        "source": {"$ref": "#/$defs/propertySource"},
+        "valid_ranges": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/validityRange"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "materialProperty": {
+      "oneOf": [
+        {"$ref": "#/$defs/scalarProperty"},
+        {"$ref": "#/$defs/curveProperty"}
+      ]
+    }
+  }
+}

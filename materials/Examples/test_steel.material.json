@@ -1,0 +1,70 @@
+{
+  "schema": "ems_material",
+  "schema_version": "1.0",
+  "material_id": "example:test_steel",
+  "material_version": "1.0.0",
+  "identity": {
+    "name": "Test Steel",
+    "family": "electrical_steel",
+    "manufacturer": null,
+    "grade": null,
+    "description": "Synthetic PoC material; not a manufacturer value",
+    "aliases": [],
+    "tags": ["poc", "example"]
+  },
+  "properties": {
+    "general": {
+      "density": {
+        "type": "scalar",
+        "value": 7.65,
+        "unit": "g/cm3",
+        "note": "Synthetic nominal density at 20 degC",
+        "conditions": {
+          "temperature": {
+            "value": 20.0,
+            "unit": "degC"
+          }
+        }
+      }
+    },
+    "electromagnetic": {
+      "BH_curve": {
+        "type": "curve",
+        "note": "Synthetic B-H curve for regression and GUI testing",
+        "x": {
+          "name": "H",
+          "unit": "A/m",
+          "values": [0.0, 100.0, 1000.0]
+        },
+        "y": {
+          "name": "B",
+          "unit": "T",
+          "values": [0.0, 1.0, 1.5]
+        },
+        "display": {
+          "x_scale": "linear",
+          "y_scale": "linear"
+        }
+      }
+    },
+    "manufacturing": {
+      "sheet_thickness": {
+        "type": "scalar",
+        "value": 0.00035,
+        "unit": "m",
+        "note": "Synthetic electrical steel sheet thickness"
+      }
+    }
+  },
+  "provenance": {
+    "source_type": "REFERENCE",
+    "reference": "EMS Material Manager PoC example",
+    "date": "2026-09-12",
+    "notes": "Regression and GUI evaluation data only"
+  },
+  "version_metadata": {
+    "author": "EMS",
+    "updated_at": "2026-09-12T00:00:00+09:00",
+    "change_note": "Initial PoC fixture"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "ems_material_source_config",
+  "schema_version": "1.0",
+  "name": "Examples",
+  "description": "Read-only synthetic examples for evaluating the Material Manager",
+  "files": [
+    "test_steel.material.json"
+  ]
+}

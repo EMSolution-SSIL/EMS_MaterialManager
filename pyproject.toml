@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ems-material-manager"
+version = "0.1.0"
+description = "Product-independent material data models and services for EMS products"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Proprietary"}
+dependencies = [
+    "jsonschema>=4.18",
+]
+
+[project.optional-dependencies]
+gui = [
+    "PySide6>=6.5",
+    "qtpy>=2.4",
+    "matplotlib>=3.7",
+]
+
+[project.scripts]
+ems-material-manager = "ems_material.gui.app:main"
+
+[tool.setuptools.package-data]
+ems_material = [
+    "schemas/*.json",
+    "catalog_defaults/*.json",
+    "catalog_defaults/templates/*.json",
+    "format_profiles/*.json",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

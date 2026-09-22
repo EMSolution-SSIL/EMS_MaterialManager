@@ -1,0 +1,102 @@
+diff --git a/GUI/MS_Dialogs/MS_Preferences.py b/GUI/MS_Dialogs/MS_Preferences.py
+--- a/GUI/MS_Dialogs/MS_Preferences.py
++++ b/GUI/MS_Dialogs/MS_Preferences.py
+@@ -1,11 +1,11 @@
+ import sys
+-from os.path import dirname, join
++from os.path import dirname, isdir, join
+
+ from cycler import cycler
+ from matplotlib.font_manager import get_font_names
+ from matplotlib.pyplot import cm, rcParams
+ from qtpy.QtGui import QIcon
+-from qtpy.QtWidgets import QDialog, QDialogButtonBox, QFileDialog
++from qtpy.QtWidgets import QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton
+
+ from GUI.MS_Components.MS_Options_Tree import (
+     MS_CheckBox,
+@@ -153,10 +153,34 @@
+         self.gmsh_pushButton.clicked.connect(self.get_gmsh_path)
+         self.template_lineEdit.setText(self.settings.value("Paths/template", ""))
+         self.template_pushButton.clicked.connect(self.get_template_path)
++
++        material_manager_layout = QHBoxLayout()
++        material_manager_layout.addWidget(QLabel("Material Manager root", self.paths_tab))
++        self.material_manager_lineEdit = QLineEdit(self.paths_tab)
++        self.material_manager_lineEdit.setText(self._material_manager_root())
++        material_manager_layout.addWidget(self.material_manager_lineEdit)
++        self.material_manager_pushButton = QPushButton("Browse", self.paths_tab)
++        self.material_manager_pushButton.clicked.connect(self.get_material_manager_root)
++        material_manager_layout.addWidget(self.material_manager_pushButton)
++        # Keep the generated stretch item as the final item in the Paths tab.
++        self.verticalLayout_4.insertLayout(
++            max(0, self.verticalLayout_4.count() - 1), material_manager_layout
++        )
+         # temporary hiding templates
+         self.template_lineEdit.hide()
+         self.template_pushButton.hide()
+         self.template_label.hide()
++
++    def _material_manager_root(self):
++        configured = str(self.settings.value("Paths/material_manager_root", "")).strip()
++        if configured:
++            return configured
++        try:
++            from ems_material.gui.product_exchange import remembered_library_root
++        except ImportError:
++            return ""
++        root = remembered_library_root()
++        return str(root) if root is not None else ""
+
+     def init_plot_tab(self):
+         self.plot_options_tree = MS_Options_Tree()
+@@ -318,10 +342,28 @@
+         if path:
+             self.template_lineEdit.setText(path)
+
++    def get_material_manager_root(self):
++        path = QFileDialog.getExistingDirectory(
++            self,
++            "Select EMS Material Manager root",
++            self.material_manager_lineEdit.text(),
++        )
++        if path:
++            self.material_manager_lineEdit.setText(path)
++
+     def write_settings(self):
+         # Paths
++        material_manager_root = self.material_manager_lineEdit.text().strip()
++        if material_manager_root and not isdir(material_manager_root):
++            QMessageBox.warning(
++                self,
++                "Invalid Material Manager root",
++                "Select an existing Material Manager directory.",
++            )
++            return False
+         self.settings.setValue("Paths/gmsh", self.gmsh_lineEdit.text())
+         self.settings.setValue("Paths/template", self.template_lineEdit.text())
++        self.settings.setValue("Paths/material_manager_root", material_manager_root)
+         # Geometry
+         self.settings.setValue(
+             "Preferences/Background Color",
+@@ -421,7 +463,8 @@
+         )
+
+     def accept(self):
+-        self.write_settings()
++        if not self.write_settings():
++            return
+         rcParams["axes.prop_cycle"] = CORLOR_CYCLER_DICT[self.plot_options_tree.get_value("Color Cycle")]
+         rcParams["font.family"] = self.plot_options_tree.get_value("Font")
+         rcParams["font.size"] = int(self.plot_options_tree.get_value("Font Size"))
+@@ -429,8 +472,9 @@
+         super().accept()
+
+     def apply(self):
++        if not self.write_settings():
++            return
+         self.initial_settings = {key: self.settings.value(key) for key in self.settings.allKeys()}
+-        self.write_settings()
+         rcParams["axes.prop_cycle"] = CORLOR_CYCLER_DICT[self.plot_options_tree.get_value("Color Cycle")]
+         rcParams["font.family"] = self.plot_options_tree.get_value("Font")
+         rcParams["font.size"] = int(self.plot_options_tree.get_value("Font Size"))
