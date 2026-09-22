@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Product-independent material data models and services for EMS products"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "Proprietary"}
+license = {text = "PolyForm Perimeter License 1.0.1"}
 dependencies = [
     "jsonschema>=4.18",
 ]

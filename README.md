@@ -1,8 +1,10 @@
 # EMS Material Manager
 
+[日本語](README_ja.md)
+
 EMS Material Manager is a desktop and Python tool for registering, validating, reusing, and exchanging material data for EMSolution workflows. It is the editable material-data master; product projects receive independent snapshots rather than live links to master values.
 
-> **Pre-release:** This repository contains release-candidate source and documentation. The source code is licensed under PolyForm Perimeter License 1.0.1; see `LICENSE`.
+> **v0.1.0:** The source code is licensed under PolyForm Perimeter License 1.0.1; see `LICENSE`.
 
 ## Highlights
 
@@ -17,7 +19,7 @@ EMS Material Manager is a desktop and Python tool for registering, validating, r
 Python 3.11 or later is required.
 
 ```powershell
-python -m pip install -e ".[gui]"
+python -m pip install "ems-material-manager[gui]"
 ems-material-manager --library-root .\materials
 ```
 

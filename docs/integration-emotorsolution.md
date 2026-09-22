@@ -1,5 +1,7 @@
 # eMotorSolution Integration
 
+[日本語](integration-emotorsolution_ja.md)
+
 The Material Manager root is selected once in eMotorSolution and then remembered for that Windows user.
 
 ## Configure the root

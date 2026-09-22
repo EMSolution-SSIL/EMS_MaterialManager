@@ -1,5 +1,7 @@
 # EMSolution Python API
 
+[日本語](api-emsolution_ja.md)
+
 This is the supported public product API. It copies material values into an EMSolution `input.json`; the source material remains the master record.
 
 ## Export a material to `input.json`

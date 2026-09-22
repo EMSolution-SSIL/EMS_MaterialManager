@@ -1,5 +1,7 @@
 # GUI Guide
 
+[日本語](gui-guide_ja.md)
+
 ## Material tree
 
 The left pane is a `source -> family -> material` tree. Material IDs are internal identifiers; the tree shows the source, family, and material name so that long IDs do not obscure the list.

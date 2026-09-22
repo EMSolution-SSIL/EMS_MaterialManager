@@ -1,5 +1,7 @@
 # Getting Started
 
+[日本語](getting-started_ja.md)
+
 EMS Material Manager is a desktop and Python tool for registering, validating, reusing, and exchanging material data used by EMSolution workflows.
 
 ## Requirements

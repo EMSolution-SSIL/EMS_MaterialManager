@@ -1,5 +1,7 @@
 # Material Data Management
 
+[日本語](material-data_ja.md)
+
 ## Manager root
 
 A manager root contains an explicit allow-list of data sources.

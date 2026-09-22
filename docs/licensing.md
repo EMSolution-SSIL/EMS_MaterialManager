@@ -1,5 +1,7 @@
 # Licensing and Data Provenance
 
+[日本語](licensing_ja.md)
+
 ## Code and data are separate
 
 The license at the repository root applies to EMS Material Manager code only. It does not automatically apply to material data, data extracted from publications, or data supplied by a customer.

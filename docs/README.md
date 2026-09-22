@@ -1,5 +1,7 @@
 # EMS Material Manager Documentation
 
+[日本語](README_ja.md)
+
 This folder contains public, user-facing documentation. Development plans, design reviews, and internal release preparation remain in `docs_dev/`.
 
 | Document | Purpose |
